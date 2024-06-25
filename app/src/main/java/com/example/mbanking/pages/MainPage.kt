@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,14 @@ import com.example.mbanking.buttons.AddButton
 import com.example.mbanking.details.AccountCard
 import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
+import com.example.mbanking.util.TransactionsData
+
+var listOfTransctions = listOf(
+    TransactionsData.First,
+    TransactionsData.Second,
+    TransactionsData.Third,
+    TransactionsData.Four
+)
 
 @Composable
 fun MainWindow(modifier: Modifier = Modifier) {
@@ -67,8 +76,8 @@ fun MainWindow(modifier: Modifier = Modifier) {
                 )
             }
             Spacer(modifier.size(20.dp))
-            Column(
-                modifier
+            LazyColumn(
+                modifier = modifier
                     .wrapContentSize()
                     .drawBehind {
                         drawRoundRect(
@@ -76,8 +85,9 @@ fun MainWindow(modifier: Modifier = Modifier) {
                             cornerRadius = CornerRadius(15.dp.toPx())
                         )
                     }) {
-                for (i in 1..4) {
-                    TransactionCard()
+                items(4) {
+                    value->
+                    TransactionCard(transactionsData = listOfTransctions[value])
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
                         color = Color(0xFF545458).copy(0.65f),

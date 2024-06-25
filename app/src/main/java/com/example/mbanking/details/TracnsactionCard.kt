@@ -24,9 +24,18 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mbanking.R
+import com.example.mbanking.util.TransactionsData
+
+
+val colorMap = mapOf(
+    "Executed" to 0xFF52AB5B,
+    "Declined" to 0xFFF5675E,
+    "In progress" to 0xFFF1BF37
+)
 
 @Composable
-fun TransactionCard(modifier: Modifier = Modifier) {
+fun TransactionCard(modifier: Modifier = Modifier, transactionsData: TransactionsData) {
     Box(
         modifier
             .fillMaxWidth()
@@ -36,17 +45,17 @@ fun TransactionCard(modifier: Modifier = Modifier) {
     {
         Column(modifier.padding(start = 15.dp, top = 10.dp)) {
             Text(
-                text = "OOO “Company”", color = Color.White,
+                text = transactionsData.company, color = Color.White,
                 fontSize = 17.sp
             )
             Text(
-                text = "01.06.2024",
+                text = transactionsData.date,
                 color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
                 fontSize = 13.sp
             )
             Text(
-                text = "Executed",
-                color = Color(0xFF52AB5B),
+                text = transactionsData.transactionStatus,
+                color = Color(colorMap[transactionsData.transactionStatus]!!),
                 fontSize = 13.sp
             )
         }
@@ -57,7 +66,7 @@ fun TransactionCard(modifier: Modifier = Modifier) {
                 .wrapContentSize()
         ) {
             Text(
-                text = "$10.09",
+                text = "$${transactionsData.amount}",
                 color = Color.White,
                 fontSize = 17.sp,
                 modifier = modifier.padding(end = 10.dp)
@@ -91,5 +100,5 @@ fun TransactionCard(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun TransactionCardPreview() {
-    TransactionCard()
+    TransactionCard(transactionsData = TransactionsData.First)
 }
