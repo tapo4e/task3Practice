@@ -15,9 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
@@ -33,36 +31,39 @@ fun TransactionCard(modifier: Modifier = Modifier) {
         modifier
             .fillMaxWidth()
             .size(height = 100.dp, width = 0.dp)
-            .background( Color.Transparent)
+            .background(Color.Transparent)
     )
     {
-            Column(modifier.padding(start = 15.dp, top = 10.dp)) {
-                Text(
-                    text = "OOO “Company”", color = Color.White,
-                    fontSize = 17.sp
-                )
-                Text(
-                    text = "01.06.2024",
-                    color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
-                    fontSize = 13.sp
-                )
-                Text(
-                    text = "Executed",
-                    color = Color(0xFF52AB5B),
-                    fontSize = 13.sp
-                )
-            }
-        Row(modifier.align(Alignment.TopEnd)
-            .padding(top=10.dp, end = 20.dp)
-            .wrapContentSize()) {
+        Column(modifier.padding(start = 15.dp, top = 10.dp)) {
+            Text(
+                text = "OOO “Company”", color = Color.White,
+                fontSize = 17.sp
+            )
+            Text(
+                text = "01.06.2024",
+                color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
+                fontSize = 13.sp
+            )
+            Text(
+                text = "Executed",
+                color = Color(0xFF52AB5B),
+                fontSize = 13.sp
+            )
+        }
+        Row(
+            modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 10.dp, end = 20.dp)
+                .wrapContentSize()
+        ) {
             Text(
                 text = "$10.09",
                 color = Color.White,
                 fontSize = 17.sp,
-                modifier=modifier.padding(end = 10.dp)
+                modifier = modifier.padding(end = 10.dp)
             )
             Spacer(modifier
-                .padding(top =4.dp)
+                .padding(top = 4.dp)
                 .drawWithCache {
                     val path = Path()
                     path.moveTo(0f, 0f)

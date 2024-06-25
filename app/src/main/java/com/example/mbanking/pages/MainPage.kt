@@ -86,9 +86,12 @@ fun MainWindow(modifier: Modifier = Modifier) {
                 }
             }
         }
-        Box(modifier.align(Alignment.BottomEnd)
-            .wrapContentSize()
-            .padding(bottom = 50.dp,end=20.dp)) {
+        Box(
+            modifier
+                .align(Alignment.BottomEnd)
+                .wrapContentSize()
+                .padding(bottom = 50.dp, end = 20.dp)
+        ) {
             AddButton()
         }
     }

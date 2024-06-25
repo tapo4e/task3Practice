@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 
 @Composable
-fun AccountCard(modifier: Modifier=Modifier){
+fun AccountCard(modifier: Modifier = Modifier) {
     Box(
         modifier
             .fillMaxWidth()
@@ -53,11 +53,13 @@ fun AccountCard(modifier: Modifier=Modifier){
                 Text(
                     text = "91212192291221",
                     color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
-                    fontSize = 13.sp)
+                    fontSize = 13.sp
+                )
                 Text(
                     text = "•••• 1234",
                     color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
-                    fontSize = 13.sp)
+                    fontSize = 13.sp
+                )
             }
 
         }
@@ -90,5 +92,5 @@ fun AccountCard(modifier: Modifier=Modifier){
 @Preview(showBackground = true)
 @Composable
 fun AccountCardPreview() {
-        AccountCard()
+    AccountCard()
 }
