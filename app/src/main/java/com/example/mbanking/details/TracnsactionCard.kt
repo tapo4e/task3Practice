@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
+import com.example.mbanking.util.AccountData
 import com.example.mbanking.util.TransactionsData
 
 
@@ -45,17 +46,17 @@ fun TransactionCard(modifier: Modifier = Modifier, transactionsData: Transaction
     {
         Column(modifier.padding(start = 15.dp, top = 10.dp)) {
             Text(
-                text = transactionsData.company, color = Color.White,
+                text = transactionsData.getCompany(), color = Color.White,
                 fontSize = 17.sp
             )
             Text(
-                text = transactionsData.date,
+                text = transactionsData.getDate(),
                 color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
                 fontSize = 13.sp
             )
             Text(
-                text = transactionsData.transactionStatus,
-                color = Color(colorMap[transactionsData.transactionStatus]!!),
+                text = transactionsData.getTransactionStatus(),
+                color = Color(colorMap[transactionsData.getTransactionStatus()]!!),
                 fontSize = 13.sp
             )
         }
@@ -66,7 +67,7 @@ fun TransactionCard(modifier: Modifier = Modifier, transactionsData: Transaction
                 .wrapContentSize()
         ) {
             Text(
-                text = "$${transactionsData.amount}",
+                text = "$${transactionsData.getAmount()}",
                 color = Color.White,
                 fontSize = 17.sp,
                 modifier = modifier.padding(end = 10.dp)
@@ -100,5 +101,5 @@ fun TransactionCard(modifier: Modifier = Modifier, transactionsData: Transaction
 @Preview(showBackground = true)
 @Composable
 fun TransactionCardPreview() {
-    TransactionCard(transactionsData = TransactionsData.First)
+    TransactionCard(transactionsData = AccountData.First.listOfTransctions[0])
 }
