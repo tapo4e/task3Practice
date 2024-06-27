@@ -46,45 +46,36 @@ fun BottomSheet(
             BottomSheetDefaults.DragHandle(color = Color.White)
         }
     ) {
-        ContentBotttomSheet(scope=scope, modalBottomSheetState = modalBottomSheetState, onDismiss = {onDismiss()})
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ContentBotttomSheet(
-    modifier: Modifier = Modifier,
-    scope: CoroutineScope,
-    modalBottomSheetState: SheetState,
-    onDismiss: () -> Unit
-) {
-    Column(
-        modifier
-            .background(Color.Black)
-            .padding(start = 10.dp, end = 10.dp)
-    ) {
-
-        Text(
-            text = "Select the account",
-            color = Color.White,
-            fontSize = 34.sp,
-            fontWeight = FontWeight.Bold
-        )
-        LazyColumn(
+        Column(
             modifier
-                .fillMaxSize()
-                .padding(top = 20.dp)
-
+                .background(Color.Black)
+                .padding(start = 10.dp, end = 10.dp)
         ) {
-            items(listOfAccounts.size) { value ->
-                AccountCard(accountData = listOfAccounts[value], onClick = {
-                scope.launch { modalBottomSheetState.hide() }.invokeOnCompletion {
-                    onDismiss()
-                    accountValue = value
+
+            Text(
+                text = "Select the account",
+                color = Color.White,
+                fontSize = 34.sp,
+                fontWeight = FontWeight.Bold
+            )
+            LazyColumn(
+                modifier
+                    .fillMaxSize()
+                    .padding(top = 20.dp)
+
+            ) {
+                items(listOfAccounts.size) { value ->
+                    AccountCard(accountData = listOfAccounts[value], onClick = {
+                        scope.launch { modalBottomSheetState.hide() }.invokeOnCompletion {
+                            onDismiss()
+                            accountValue = value
+                        }
+                    })
+                    Spacer(modifier.size(10.dp))
                 }
-                })
-                Spacer(modifier.size(10.dp))
             }
         }
     }
 }
+
+
