@@ -1,6 +1,7 @@
 package com.example.mbanking.details
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,11 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
+import com.example.mbanking.util.AccountData
 
 @Composable
-fun AccountCard(modifier: Modifier = Modifier) {
+fun AccountCard(modifier: Modifier = Modifier,onClick:()->Unit,accountData: AccountData) {
     Box(
         modifier
+            .clickable { onClick() }
             .fillMaxWidth()
             .size(height = 100.dp, width = 0.dp)
             .drawBehind {
@@ -49,14 +53,14 @@ fun AccountCard(modifier: Modifier = Modifier) {
                 modifier.size(40.dp)
             )
             Column(modifier.padding(start = 10.dp)) {
-                Text(text = "Saving Account", color = Color.White)
+                Text(text = accountData.accountName, color = Color.White)
                 Text(
-                    text = "91212192291221",
+                    text = accountData.bankAccountNumber,
                     color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
                     fontSize = 13.sp
                 )
                 Text(
-                    text = "•••• 1234",
+                    text = "•••• ${accountData.cardNumber}",
                     color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
                     fontSize = 13.sp
                 )
@@ -92,5 +96,7 @@ fun AccountCard(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun AccountCardPreview() {
-    AccountCard()
+    AccountCard(accountData = AccountData.First, onClick = {
+
+    })
 }
