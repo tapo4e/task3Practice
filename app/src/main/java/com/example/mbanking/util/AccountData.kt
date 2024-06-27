@@ -33,9 +33,9 @@ sealed class AccountData(
         bankAccountNumber = "91212192295555",
         cardNumber = "6005",
         listOfTransctions = listOf(
-            TransactionsData("Alpha-bank", "30.04.2024", "Executed", "10.3"),
+            TransactionsData("Alpha-bank", "30.04.2024", "Executed", "100.3"),
             TransactionsData("BNB-bank", "01.04.2024", "Declined", "100.3"),
-            TransactionsData("T-bank","29.04.2024","Executed","200.3"),
+            TransactionsData("T-bank","29.04.2024","Executed","500.3"),
             TransactionsData("Alpha-bank","30.04.2024","In progress","10.3")
         )
     )

@@ -14,12 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,18 +36,20 @@ import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
 import com.example.mbanking.util.AccountData
 
-var listOfAccounts = listOf(AccountData.First,AccountData.Second,AccountData.Third)
-var accountNumber:Int=0
-@OptIn(ExperimentalMaterial3Api::class)
+var listOfAccounts = listOf(AccountData.First, AccountData.Second, AccountData.Third)
+
+var accountValue: Int = 0
+
 @Composable
 fun MainWindow(modifier: Modifier = Modifier) {
-    val scope = rememberCoroutineScope()
-    val modalBottomSheetState = rememberModalBottomSheetState()
+    var accountNumber by remember { mutableIntStateOf(0) }
+    accountNumber = accountValue
     var showSheet by remember { mutableStateOf(false) }
     if (showSheet) {
-        BottomSheet (modalBottomSheetState=modalBottomSheetState,scope=scope,onDismiss = {
+        BottomSheet(onDismiss = {
             showSheet = false
         })
+        println(accountNumber)
     }
     Box(
         modifier
@@ -100,8 +101,7 @@ fun MainWindow(modifier: Modifier = Modifier) {
                             cornerRadius = CornerRadius(15.dp.toPx())
                         )
                     }) {
-                items(4) {
-                    value->
+                items(4) { value ->
                     TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[value])
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
@@ -112,10 +112,10 @@ fun MainWindow(modifier: Modifier = Modifier) {
             }
         }
         Box(
-                    modifier
-                        .align(Alignment.BottomEnd)
-                        .wrapContentSize()
-                        .padding(bottom = 50.dp, end = 20.dp)
+            modifier
+                .align(Alignment.BottomEnd)
+                .wrapContentSize()
+                .padding(bottom = 50.dp, end = 20.dp)
         ) {
             AddButton()
         }
