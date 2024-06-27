@@ -1,10 +1,11 @@
 package com.example.mbanking.util
 
 class TransactionsData(
-    private val company: String,
-    private val date: String,
-    private val transactionStatus: String,
-    private val amount: String
+    private var company: String,
+    private var date: String,
+    private var transactionStatus: String,
+    private var amount: String,
+    private var transactionNumber : String
 ) {
 
     fun getCompany():String{
@@ -18,5 +19,20 @@ class TransactionsData(
     }
     fun getAmount():String{
         return amount
+    }
+    fun setCompany(company: String){
+        this.company=company
+    }
+    fun setDate(date: String){
+        this.date=date
+    }
+    fun setTransactionStatus(transactionStatus: String){
+        this.transactionStatus=transactionStatus
+    }
+    fun setAmount(amount: String){
+        this.amount =amount
+    }
+    fun setTransactionNumber(transactionNumber: String){
+        this.transactionNumber=transactionNumber
     }
 }

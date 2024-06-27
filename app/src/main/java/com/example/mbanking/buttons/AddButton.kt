@@ -1,6 +1,7 @@
 package com.example.mbanking.buttons
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -21,9 +22,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AddButton(
     modifier: Modifier = Modifier,
+    onClick:()->Unit
 ) {
     Box(
         modifier
+            .clickable { onClick() }
             .size(50.dp)
             .graphicsLayer {
                 clip = true
@@ -76,5 +79,5 @@ fun AddButton(
 @Preview
 @Composable
 fun PreviewLoader() {
-    AddButton()
+    AddButton{}
 }

@@ -40,7 +40,7 @@ var listOfAccounts = listOf(AccountData.First, AccountData.Second, AccountData.T
 var accountValue: Int = 0
 
 @Composable
-fun MainWindow(modifier: Modifier = Modifier) {
+fun MainWindow(modifier: Modifier = Modifier, onClick:()->Unit) {
     var accountNumber by remember { mutableIntStateOf(0) }
     accountNumber = accountValue
     var showSheet by remember { mutableStateOf(false) }
@@ -101,7 +101,8 @@ fun MainWindow(modifier: Modifier = Modifier) {
                         )
                     }) {
                 items(4) { value ->
-                    TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[value])
+                    val it=listOfAccounts[accountNumber].listOfTransctions.size-value-1
+                    TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[it])
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
                         color = Color(0xFF545458).copy(0.65f),
@@ -116,7 +117,7 @@ fun MainWindow(modifier: Modifier = Modifier) {
                 .wrapContentSize()
                 .padding(bottom = 50.dp, end = 20.dp)
         ) {
-            AddButton()
+            AddButton{onClick()}
         }
     }
 }
@@ -126,6 +127,6 @@ fun MainWindow(modifier: Modifier = Modifier) {
 @Composable
 fun MainPagePreview() {
     MBankingTheme {
-        MainWindow()
+        MainWindow{}
     }
 }
