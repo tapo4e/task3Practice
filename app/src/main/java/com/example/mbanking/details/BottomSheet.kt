@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.pages.accountValue
 import com.example.mbanking.pages.listOfAccounts
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
