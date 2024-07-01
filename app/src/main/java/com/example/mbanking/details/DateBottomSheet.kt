@@ -59,7 +59,9 @@ fun DateBottomSheet(
             onDateSelected = { startDateSheet = it },
             onDismiss = { startSheetState = false })
     } else if (endSheetState) {
-        MyDatePickerDialog(onDateSelected = { endDateSheet = it }, onDismiss = { endSheetState = false })
+        MyDatePickerDialog(
+            onDateSelected = { endDateSheet = it },
+            onDismiss = { endSheetState = false })
     }
     val scope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -106,7 +108,7 @@ fun DateBottomSheet(
                         .padding(top = 7.dp),
                     shape = RoundedCornerShape(10.dp),
                     textStyle = TextStyle(Color.White),
-                    isError = checkDate(startDateSheet,validError),
+                    isError = checkDate(startDateSheet, validError),
                     readOnly = true,
                     trailingIcon = {
                         Icon(painter = painterResource(id = R.drawable.calendar),
@@ -131,7 +133,7 @@ fun DateBottomSheet(
                         .padding(top = 7.dp),
                     shape = RoundedCornerShape(10.dp),
                     textStyle = TextStyle(Color.White),
-                    isError = checkDate(endDateSheet,validError),
+                    isError = checkDate(endDateSheet, validError),
                     readOnly = true,
                     trailingIcon = {
                         Icon(painter = painterResource(id = R.drawable.calendar),
@@ -143,10 +145,12 @@ fun DateBottomSheet(
                 )
                 Button(
                     onClick = {
-                        validError = if (startDateSheet!="" && endDateSheet!=""){
-                            scope.launch { modalBottomSheetState.hide() }.invokeOnCompletion { onDismiss()
-                            newStartDate=startDateSheet
-                            newEndDate=endDateSheet}
+                        validError = if (startDateSheet != "" && endDateSheet != "") {
+                            scope.launch { modalBottomSheetState.hide() }.invokeOnCompletion {
+                                onDismiss()
+                                newStartDate = startDateSheet
+                                newEndDate = endDateSheet
+                            }
                             false
                         } else {
                             true

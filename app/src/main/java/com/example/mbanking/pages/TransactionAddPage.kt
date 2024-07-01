@@ -152,6 +152,7 @@ fun TransactionAddPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
     }
 }
+
 @Preview
 @Composable
 fun TransactionAddPagePreview() {

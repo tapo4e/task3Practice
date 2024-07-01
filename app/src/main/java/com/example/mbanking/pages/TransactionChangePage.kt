@@ -116,7 +116,7 @@ fun TransactionChangePage(
                 fontWeight = FontWeight.Light
             )
             OutlinedTextField(
-                value = date, onValueChange = { transactionsData.setDate(it);},
+                value = date, onValueChange = { transactionsData.setDate(it); },
                 readOnly = true,
                 modifier = modifier
                     .fillMaxWidth()

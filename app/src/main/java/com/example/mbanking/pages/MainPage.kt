@@ -92,7 +92,7 @@ fun MainWindow(
                     text = "VIEW ALL",
                     modifier
                         .align(Alignment.CenterEnd)
-                        .clickable { onClickViewAllButton()},
+                        .clickable { onClickViewAllButton() },
                     fontSize = 14.sp,
                     color = Color(0xFF409CFF)
                 )

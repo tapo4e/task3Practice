@@ -31,7 +31,7 @@ import com.example.mbanking.R
 import com.example.mbanking.data.AccountData
 
 @Composable
-fun AccountCard(modifier: Modifier = Modifier,onClick:()->Unit,accountData: AccountData) {
+fun AccountCard(modifier: Modifier = Modifier, onClick: () -> Unit, accountData: AccountData) {
     Box(
         modifier
             .clickable { onClick() }
