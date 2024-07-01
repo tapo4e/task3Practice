@@ -1,6 +1,7 @@
 package com.example.mbanking.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,14 +34,19 @@ import com.example.mbanking.details.AccountCard
 import com.example.mbanking.details.BottomSheet
 import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
-import com.example.mbanking.util.AccountData
+import com.example.mbanking.data.AccountData
 
-var listOfAccounts = listOf(AccountData.First, AccountData.Second, AccountData.Third)
-
+var listOfAccounts = mutableListOf(AccountData.First, AccountData.Second, AccountData.Third)
+var transactionIter = 0
 var accountValue: Int = 0
 
 @Composable
-fun MainWindow(modifier: Modifier = Modifier) {
+fun MainWindow(
+    modifier: Modifier = Modifier,
+    onClickAddButton: () -> Unit,
+    onClickTransactionButton: () -> Unit,
+    onClickViewAllButton: () -> Unit
+) {
     var accountNumber by remember { mutableIntStateOf(0) }
     accountNumber = accountValue
     var showSheet by remember { mutableStateOf(false) }
@@ -85,7 +91,9 @@ fun MainWindow(modifier: Modifier = Modifier) {
                 )
                 Text(
                     text = "VIEW ALL",
-                    modifier.align(Alignment.CenterEnd),
+                    modifier
+                        .align(Alignment.CenterEnd)
+                        .clickable { onClickViewAllButton()},
                     fontSize = 14.sp,
                     color = Color(0xFF409CFF)
                 )
@@ -101,7 +109,12 @@ fun MainWindow(modifier: Modifier = Modifier) {
                         )
                     }) {
                 items(4) { value ->
-                    TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[value])
+                    val it = listOfAccounts[accountNumber].listOfTransctions.size - value - 1
+                    TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[it])
+                    {
+
+                        onClickTransactionButton()
+                    }
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
                         color = Color(0xFF545458).copy(0.65f),
@@ -116,7 +129,7 @@ fun MainWindow(modifier: Modifier = Modifier) {
                 .wrapContentSize()
                 .padding(bottom = 50.dp, end = 20.dp)
         ) {
-            AddButton()
+            AddButton { onClickAddButton() }
         }
     }
 }
@@ -126,6 +139,7 @@ fun MainWindow(modifier: Modifier = Modifier) {
 @Composable
 fun MainPagePreview() {
     MBankingTheme {
-        MainWindow()
+        MainWindow(onClickAddButton = {}, onClickViewAllButton = {},
+            onClickTransactionButton = {})
     }
 }

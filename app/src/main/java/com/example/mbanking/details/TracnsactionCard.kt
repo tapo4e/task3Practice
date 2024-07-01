@@ -1,6 +1,7 @@
 package com.example.mbanking.details
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,9 +25,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mbanking.R
-import com.example.mbanking.util.AccountData
-import com.example.mbanking.util.TransactionsData
+import com.example.mbanking.data.AccountData
+import com.example.mbanking.data.TransactionsData
 
 
 val colorMap = mapOf(
@@ -36,12 +36,16 @@ val colorMap = mapOf(
 )
 
 @Composable
-fun TransactionCard(modifier: Modifier = Modifier, transactionsData: TransactionsData) {
+fun TransactionCard(
+    modifier: Modifier = Modifier,
+    transactionsData: TransactionsData,
+    onClick:() ->Unit) {
     Box(
         modifier
             .fillMaxWidth()
             .size(height = 100.dp, width = 0.dp)
             .background(Color.Transparent)
+            .clickable { onClick() }
     )
     {
         Column(modifier.padding(start = 15.dp, top = 10.dp)) {
@@ -101,5 +105,5 @@ fun TransactionCard(modifier: Modifier = Modifier, transactionsData: Transaction
 @Preview(showBackground = true)
 @Composable
 fun TransactionCardPreview() {
-    TransactionCard(transactionsData = AccountData.First.listOfTransctions[0])
+    TransactionCard(transactionsData = AccountData.First.listOfTransctions[0]){}
 }
