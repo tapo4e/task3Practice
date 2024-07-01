@@ -1,7 +1,9 @@
 package com.example.mbanking.pages
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,24 +30,29 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mbanking.R
 import com.example.mbanking.details.TransactionCard
 
 @Composable
-fun AllTransactions(modifier: Modifier = Modifier,
-                    onClickBackButton:()->Unit) {
+fun AllTransactions(
+    modifier: Modifier = Modifier,
+    onClickBackButton: () -> Unit,
+    onClickTransactionButton: () -> Unit
+) {
     Column(
         modifier
             .background(Color.Black)
             .fillMaxSize()
             .padding(20.dp)
     ) {
-        Row(modifier.fillMaxWidth()) {
+        Box(modifier.fillMaxWidth()) {
             Spacer(modifier
-                .align(Alignment.CenterVertically)
+                .align(Alignment.CenterStart)
                 .clickable { onClickBackButton() }
                 .drawWithCache {
                     val path = Path()
@@ -71,7 +79,13 @@ fun AllTransactions(modifier: Modifier = Modifier,
                 color = Color.White,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                modifier=modifier.padding(start=90.dp)
+                modifier = modifier.
+                align(Alignment.Center)
+            )
+            Image(
+                painter = painterResource(id = R.drawable.filter_button),
+                contentDescription = null,
+                modifier.align(Alignment.CenterEnd)
             )
         }
         Spacer(modifier.size(20.dp))
@@ -88,7 +102,7 @@ fun AllTransactions(modifier: Modifier = Modifier,
                 val it = listOfAccounts[accountValue].listOfTransctions.size - value - 1
                 TransactionCard(transactionsData = listOfAccounts[accountValue].listOfTransctions[it])
                 {
-
+                    onClickTransactionButton()
                 }
                 Divider(
                     modifier.padding(start = 15.dp, end = 15.dp),
@@ -103,7 +117,7 @@ fun AllTransactions(modifier: Modifier = Modifier,
 @Preview
 @Composable
 fun AllTransactionsPreview() {
-    AllTransactions(){
+    AllTransactions(onClickBackButton = {}) {
 
     }
 }

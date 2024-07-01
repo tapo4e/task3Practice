@@ -50,7 +50,10 @@ class MainActivity : ComponentActivity() {
 
                     }
                     composable("all_transactions") {
-                        AllTransactions(onClickBackButton = {
+                        AllTransactions(onClickTransactionButton = {
+                            navController.navigate("change_transactions_all_page") {
+                            }
+                        }, onClickBackButton = {
                             navController.navigate("main_screen") {
                                 popUpTo("main_screen") {
                                     inclusive = true
@@ -58,6 +61,15 @@ class MainActivity : ComponentActivity() {
                             }
                         })
 
+                    }
+                    composable("change_transactions_all_page") {
+                        TransactionChangePage(onClick = {
+                            navController.navigate("all_transactions") {
+                                popUpTo("all_transactions") {
+                                    inclusive = true
+                                }
+                            }
+                        })
                     }
                 }
             }
