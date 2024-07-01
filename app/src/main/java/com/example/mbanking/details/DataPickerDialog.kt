@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.mbanking.util.convertMillisToDate
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,12 +55,6 @@ fun MyDatePickerDialog(
 
         )
     }
-}
-@SuppressLint("SimpleDateFormat")
-private fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat("dd.MM.yyyy")
-    println(formatter)
-    return formatter.format(Date(millis))
 }
 
 @Composable

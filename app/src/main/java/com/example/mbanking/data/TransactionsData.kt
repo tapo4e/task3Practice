@@ -20,6 +20,9 @@ class TransactionsData(
     fun getAmount():String{
         return amount
     }
+    fun getTransactionNumber():String{
+        return transactionNumber
+    }
     fun setCompany(company: String){
         this.company=company
     }

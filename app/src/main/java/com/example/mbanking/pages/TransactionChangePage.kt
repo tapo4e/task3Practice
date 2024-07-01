@@ -40,18 +40,23 @@ import com.example.mbanking.util.checkStatus
 import com.example.mbanking.util.resultCheck
 
 @Composable
-fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun TransactionChangePage(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    transactionValue: Int = transactionIter,
+    transactionsData: TransactionsData = listOfAccounts[accountValue].listOfTransctions[transactionValue],
+
+    ) {
     var validError by remember {
         mutableStateOf(false)
     }
     var date by remember {
-        mutableStateOf("")
+        mutableStateOf(transactionsData.getDate())
     }
     var sheetState by remember { mutableStateOf(false) }
     if (sheetState) {
         MyDatePickerDialog(onDateSelected = { date = it }, onDismiss = { sheetState = false })
     }
-    println(date)
     Box(
         modifier
             .fillMaxSize()
@@ -75,9 +80,9 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 modifier = modifier.padding(top = 30.dp),
                 fontWeight = FontWeight.Light
             )
-            var company by remember { mutableStateOf("") }
+            var company by remember { mutableStateOf(transactionsData.getCompany()) }
             OutlinedTextField(
-                value = company, onValueChange = { company = it },
+                value = company, onValueChange = { transactionsData.setCompany(it); company = it },
                 modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
@@ -92,9 +97,10 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 modifier = modifier.padding(top = 15.dp),
                 fontWeight = FontWeight.Light
             )
-            var number by remember { mutableStateOf("") }
+            var number by remember { mutableStateOf(transactionsData.getTransactionNumber()) }
             OutlinedTextField(
-                value = number, onValueChange = { number = it },
+                value = number,
+                onValueChange = { transactionsData.setTransactionNumber(it); number = it },
                 modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
@@ -110,7 +116,7 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 fontWeight = FontWeight.Light
             )
             OutlinedTextField(
-                value = date, onValueChange = { date = it },
+                value = date, onValueChange = { transactionsData.setDate(it);},
                 readOnly = true,
                 modifier = modifier
                     .fillMaxWidth()
@@ -133,9 +139,10 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 modifier = modifier.padding(top = 15.dp),
                 fontWeight = FontWeight.Light
             )
-            var status by remember { mutableStateOf("") }
+            var status by remember { mutableStateOf(transactionsData.getTransactionStatus()) }
             OutlinedTextField(
-                value = status, onValueChange = { status = it },
+                value = status,
+                onValueChange = { transactionsData.setTransactionStatus(it); status = it },
                 modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
@@ -150,9 +157,9 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 modifier = modifier.padding(top = 15.dp),
                 fontWeight = FontWeight.Light
             )
-            var amount by remember { mutableStateOf("") }
+            var amount by remember { mutableStateOf(transactionsData.getAmount()) }
             OutlinedTextField(
-                value = amount, onValueChange = { amount = it },
+                value = amount, onValueChange = { transactionsData.setAmount(it); amount = it },
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
@@ -160,13 +167,11 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 textStyle = TextStyle(Color.White),
                 isError = checkAmount(amount, validError)
             )
-            val transaction =
-                TransactionsData(company, date, status, amount, number)
             Button(
                 onClick = {
                     if (resultCheck(company, amount, date, status, number)) {
-                        listOfAccounts[accountValue].listOfTransctions =
-                            listOfAccounts[accountValue].listOfTransctions + transaction
+                        listOfAccounts[accountValue].listOfTransctions[transactionValue] =
+                            transactionsData
                         onClick()
                         validError = false
                     } else {
@@ -190,8 +195,7 @@ fun TransactionChangePage(modifier: Modifier = Modifier, onClick: () -> Unit) {
 @Preview
 @Composable
 fun TransactionChangePagePreview() {
-    TransactionChangePage {
-    }
+    TransactionChangePage(onClick = {})
 }
 
 

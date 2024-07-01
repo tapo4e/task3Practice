@@ -1,6 +1,7 @@
 package com.example.mbanking.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -35,15 +36,16 @@ import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
 import com.example.mbanking.data.AccountData
 
-var listOfAccounts = listOf(AccountData.First, AccountData.Second, AccountData.Third)
-
+var listOfAccounts = mutableListOf(AccountData.First, AccountData.Second, AccountData.Third)
+var transactionIter = 0
 var accountValue: Int = 0
 
 @Composable
 fun MainWindow(
     modifier: Modifier = Modifier,
     onClickAddButton: () -> Unit,
-    onClickTransactionButton: () -> Unit
+    onClickTransactionButton: () -> Unit,
+    onClickViewAllButton: () -> Unit
 ) {
     var accountNumber by remember { mutableIntStateOf(0) }
     accountNumber = accountValue
@@ -89,7 +91,9 @@ fun MainWindow(
                 )
                 Text(
                     text = "VIEW ALL",
-                    modifier.align(Alignment.CenterEnd),
+                    modifier
+                        .align(Alignment.CenterEnd)
+                        .clickable { onClickViewAllButton()},
                     fontSize = 14.sp,
                     color = Color(0xFF409CFF)
                 )
@@ -108,6 +112,7 @@ fun MainWindow(
                     val it = listOfAccounts[accountNumber].listOfTransctions.size - value - 1
                     TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[it])
                     {
+
                         onClickTransactionButton()
                     }
                     Divider(
@@ -134,6 +139,7 @@ fun MainWindow(
 @Composable
 fun MainPagePreview() {
     MBankingTheme {
-        MainWindow(onClickAddButton = {}){}
+        MainWindow(onClickAddButton = {}, onClickViewAllButton = {},
+            onClickTransactionButton = {})
     }
 }
