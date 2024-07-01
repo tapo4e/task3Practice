@@ -54,7 +54,6 @@ fun MainWindow(
         BottomSheet(onDismiss = {
             showSheet = false
         })
-        println(accountNumber)
     }
     Box(
         modifier
