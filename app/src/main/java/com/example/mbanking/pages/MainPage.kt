@@ -33,14 +33,18 @@ import com.example.mbanking.details.AccountCard
 import com.example.mbanking.details.BottomSheet
 import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
-import com.example.mbanking.util.AccountData
+import com.example.mbanking.data.AccountData
 
 var listOfAccounts = listOf(AccountData.First, AccountData.Second, AccountData.Third)
 
 var accountValue: Int = 0
 
 @Composable
-fun MainWindow(modifier: Modifier = Modifier, onClick:()->Unit) {
+fun MainWindow(
+    modifier: Modifier = Modifier,
+    onClickAddButton: () -> Unit,
+    onClickTransactionButton: () -> Unit
+) {
     var accountNumber by remember { mutableIntStateOf(0) }
     accountNumber = accountValue
     var showSheet by remember { mutableStateOf(false) }
@@ -101,8 +105,11 @@ fun MainWindow(modifier: Modifier = Modifier, onClick:()->Unit) {
                         )
                     }) {
                 items(4) { value ->
-                    val it=listOfAccounts[accountNumber].listOfTransctions.size-value-1
+                    val it = listOfAccounts[accountNumber].listOfTransctions.size - value - 1
                     TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[it])
+                    {
+                        onClickTransactionButton()
+                    }
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
                         color = Color(0xFF545458).copy(0.65f),
@@ -117,7 +124,7 @@ fun MainWindow(modifier: Modifier = Modifier, onClick:()->Unit) {
                 .wrapContentSize()
                 .padding(bottom = 50.dp, end = 20.dp)
         ) {
-            AddButton{onClick()}
+            AddButton { onClickAddButton() }
         }
     }
 }
@@ -127,6 +134,6 @@ fun MainWindow(modifier: Modifier = Modifier, onClick:()->Unit) {
 @Composable
 fun MainPagePreview() {
     MBankingTheme {
-        MainWindow{}
+        MainWindow(onClickAddButton = {}){}
     }
 }

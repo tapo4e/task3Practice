@@ -2,18 +2,20 @@ package com.example.mbanking.pages
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,15 +23,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mbanking.util.TransactionsData
+import com.example.mbanking.R
+import com.example.mbanking.data.TransactionsData
+import com.example.mbanking.details.MyDatePickerDialog
+import com.example.mbanking.util.checkAmount
+import com.example.mbanking.util.checkCompany
+import com.example.mbanking.util.checkDate
+import com.example.mbanking.util.checkNumber
+import com.example.mbanking.util.checkStatus
+import com.example.mbanking.util.resultCheck
 
 @Composable
-fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun TransactionAddPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    var validError by remember {
+        mutableStateOf(false)
+    }
+    var date by remember {
+        mutableStateOf("")
+    }
+    var sheetState by remember { mutableStateOf(false) }
+    if (sheetState) {
+        MyDatePickerDialog(onDateSelected = { date = it }, onDismiss = { sheetState = false })
+    }
+    println(date)
     Box(
         modifier
             .fillMaxSize()
@@ -60,7 +82,8 @@ fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                     .fillMaxWidth()
                     .padding(top = 7.dp),
                 shape = RoundedCornerShape(10.dp),
-                textStyle = TextStyle(Color.White)
+                textStyle = TextStyle(Color.White),
+                isError = checkCompany(company, validError)
             )
             Text(
                 text = "Transaction number",
@@ -76,7 +99,8 @@ fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                     .fillMaxWidth()
                     .padding(top = 7.dp),
                 shape = RoundedCornerShape(10.dp),
-                textStyle = TextStyle(Color.White)
+                textStyle = TextStyle(Color.White),
+                isError = checkNumber(number, validError)
             )
             Text(
                 text = "Date",
@@ -85,14 +109,22 @@ fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 modifier = modifier.padding(top = 15.dp),
                 fontWeight = FontWeight.Light
             )
-            var date by remember { mutableStateOf("") }
             OutlinedTextField(
                 value = date, onValueChange = { date = it },
-                modifier
+                readOnly = true,
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
                 shape = RoundedCornerShape(10.dp),
-                textStyle = TextStyle(Color.White)
+                textStyle = TextStyle(Color.White),
+                isError = checkDate(date, validError),
+                trailingIcon = {
+                    Icon(painter = painterResource(id = R.drawable.calendar),
+                        contentDescription = null,
+                        modifier
+                            .clickable { sheetState = true }
+                            .size(20.dp))
+                }
             )
             Text(
                 text = "Transaction status",
@@ -108,7 +140,8 @@ fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                     .fillMaxWidth()
                     .padding(top = 7.dp),
                 shape = RoundedCornerShape(10.dp),
-                textStyle = TextStyle(Color.White)
+                textStyle = TextStyle(Color.White),
+                isError = checkStatus(status, validError)
             )
             Text(
                 text = "Amount",
@@ -120,19 +153,25 @@ fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
             var amount by remember { mutableStateOf("") }
             OutlinedTextField(
                 value = amount, onValueChange = { amount = it },
-                modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
                 shape = RoundedCornerShape(10.dp),
-                textStyle = TextStyle(Color.White)
+                textStyle = TextStyle(Color.White),
+                isError = checkAmount(amount, validError)
             )
             val transaction =
                 TransactionsData(company, date, status, amount, number)
             Button(
                 onClick = {
-                    listOfAccounts[accountValue].listOfTransctions =
-                        listOfAccounts[accountValue].listOfTransctions + transaction
-                    onClick()
+                    if (resultCheck(company, amount, date, status, number)) {
+                        listOfAccounts[accountValue].listOfTransctions =
+                            listOfAccounts[accountValue].listOfTransctions + transaction
+                        onClick()
+                        validError = false
+                    } else {
+                        validError = true
+                    }
                 },
                 modifier
                     .padding(top = 40.dp)
@@ -147,9 +186,11 @@ fun TransactionPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
     }
 }
-
 @Preview
 @Composable
-fun TransactionPagePreview() {
-    TransactionPage {}
+fun TransactionAddPagePreview() {
+    TransactionAddPage {}
 }
+
+
+

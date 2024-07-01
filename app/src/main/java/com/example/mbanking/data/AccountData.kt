@@ -1,4 +1,4 @@
-package com.example.mbanking.util
+package com.example.mbanking.data
 
 sealed class AccountData(
     var accountName: String,

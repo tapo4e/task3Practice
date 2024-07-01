@@ -1,4 +1,4 @@
-package com.example.mbanking.util
+package com.example.mbanking.data
 
 class TransactionsData(
     private var company: String,
