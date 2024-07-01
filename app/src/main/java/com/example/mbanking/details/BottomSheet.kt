@@ -32,7 +32,7 @@ fun BottomSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val modalBottomSheetState= rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
     ModalBottomSheet(
         modifier = modifier.fillMaxHeight(0.6f),
