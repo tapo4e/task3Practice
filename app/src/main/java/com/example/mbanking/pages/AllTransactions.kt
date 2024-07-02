@@ -38,11 +38,11 @@ import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 import com.example.mbanking.details.DateBottomSheet
 import com.example.mbanking.details.TransactionCard
+import com.example.mbanking.util.newEndDate
+import com.example.mbanking.util.newStartDate
 import com.example.mbanking.util.sortByDate
 
 
-var newStartDate = "01.01.1970"
-var newEndDate = "30.01.3000"
 
 @Composable
 fun AllTransactions(

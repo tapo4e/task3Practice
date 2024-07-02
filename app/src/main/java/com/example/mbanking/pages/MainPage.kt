@@ -35,10 +35,9 @@ import com.example.mbanking.details.BottomSheet
 import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
 import com.example.mbanking.data.AccountData
+import com.example.mbanking.util.accountValue
+import com.example.mbanking.util.listOfAccounts
 
-var listOfAccounts = mutableListOf(AccountData.First, AccountData.Second, AccountData.Third)
-var transactionIter = 0
-var accountValue: Int = 0
 
 @Composable
 fun MainWindow(

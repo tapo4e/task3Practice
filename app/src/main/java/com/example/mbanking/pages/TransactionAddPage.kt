@@ -26,11 +26,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.data.TransactionsData
+import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.checkAmount
 import com.example.mbanking.util.checkCompany
 import com.example.mbanking.util.checkNumber
 import com.example.mbanking.util.checkStatus
 import com.example.mbanking.util.convertMillisToDate
+import com.example.mbanking.util.listOfAccounts
 import com.example.mbanking.util.resultCheck
 import java.util.Calendar
 

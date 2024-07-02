@@ -32,12 +32,15 @@ import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 import com.example.mbanking.data.TransactionsData
 import com.example.mbanking.details.MyDatePickerDialog
+import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.checkAmount
 import com.example.mbanking.util.checkCompany
 import com.example.mbanking.util.checkDate
 import com.example.mbanking.util.checkNumber
 import com.example.mbanking.util.checkStatus
+import com.example.mbanking.util.listOfAccounts
 import com.example.mbanking.util.resultCheck
+import com.example.mbanking.util.transactionIter
 
 @Composable
 fun TransactionChangePage(

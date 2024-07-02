@@ -37,9 +37,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
-import com.example.mbanking.pages.newEndDate
-import com.example.mbanking.pages.newStartDate
 import com.example.mbanking.util.checkDate
+import com.example.mbanking.util.newEndDate
+import com.example.mbanking.util.newStartDate
 import kotlinx.coroutines.launch
 
 

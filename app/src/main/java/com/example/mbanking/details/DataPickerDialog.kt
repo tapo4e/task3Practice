@@ -1,7 +1,5 @@
 package com.example.mbanking.details
 
-import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -15,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mbanking.util.convertMillisToDate
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

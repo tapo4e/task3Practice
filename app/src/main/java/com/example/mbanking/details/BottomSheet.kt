@@ -21,8 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mbanking.pages.accountValue
-import com.example.mbanking.pages.listOfAccounts
+import com.example.mbanking.util.accountValue
+import com.example.mbanking.util.listOfAccounts
 import kotlinx.coroutines.launch
 
 
