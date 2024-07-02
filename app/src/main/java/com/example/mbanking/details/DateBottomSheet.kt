@@ -33,20 +33,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 import com.example.mbanking.util.checkDate
-import com.example.mbanking.util.newEndDate
-import com.example.mbanking.util.newStartDate
+import com.example.mbanking.util.checkStartEndDate
+import com.example.mbanking.util.defaultEndDate
+import com.example.mbanking.util.defaultStartDate
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateBottomSheet(
-    onDismiss: () -> Unit,
+    onDismiss: (start:String,end:String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var validError by remember { mutableStateOf(false) }
@@ -67,7 +67,7 @@ fun DateBottomSheet(
     val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(
         modifier = modifier.fillMaxHeight(0.6f),
-        onDismissRequest = { onDismiss() },
+        onDismissRequest = { onDismiss(defaultStartDate, defaultEndDate) },
         sheetState = modalBottomSheetState,
         containerColor = Color.Black,
         shape = CutCornerShape(0.dp),
@@ -145,15 +145,13 @@ fun DateBottomSheet(
                 )
                 Button(
                     onClick = {
-                        validError = if (startDateSheet != "" && endDateSheet != "") {
+                         if(checkStartEndDate(startDateSheet,endDateSheet)){
                             scope.launch { modalBottomSheetState.hide() }.invokeOnCompletion {
-                                onDismiss()
-                                newStartDate = startDateSheet
-                                newEndDate = endDateSheet
+                                onDismiss(startDateSheet,endDateSheet)
                             }
-                            false
+                            validError=false
                         } else {
-                            true
+                            validError=true
                         }
                     },
                     modifier
@@ -170,10 +168,5 @@ fun DateBottomSheet(
     }
 }
 
-@Preview
-@Composable
-fun DateBottomSheetPReview() {
-    DateBottomSheet(onDismiss = { /*TODO*/ })
-}
 
 

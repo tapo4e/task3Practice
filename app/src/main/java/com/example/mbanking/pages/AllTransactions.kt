@@ -38,10 +38,11 @@ import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 import com.example.mbanking.details.DateBottomSheet
 import com.example.mbanking.details.TransactionCard
-import com.example.mbanking.util.newEndDate
-import com.example.mbanking.util.newStartDate
+import com.example.mbanking.util.accountValue
+import com.example.mbanking.util.defaultEndDate
+import com.example.mbanking.util.defaultStartDate
+import com.example.mbanking.util.listOfAccounts
 import com.example.mbanking.util.sortByDate
-
 
 
 @Composable
@@ -50,13 +51,13 @@ fun AllTransactions(
     onClickBackButton: () -> Unit,
     onClickTransactionButton: () -> Unit
 ) {
-    var startDate by remember { mutableStateOf("") }
-    var endDate by remember { mutableStateOf("") }
-    startDate = newStartDate
-    endDate = newEndDate
+    var startDate by remember { mutableStateOf(defaultStartDate) }
+    var endDate by remember { mutableStateOf(defaultEndDate) }
     var showSheet by remember { mutableStateOf(false) }
     if (showSheet) {
-        DateBottomSheet(onDismiss = {
+        DateBottomSheet(onDismiss = {start,end->
+            startDate=start
+            endDate=end
             showSheet = false
         })
     }
@@ -102,7 +103,9 @@ fun AllTransactions(
                 contentDescription = null,
                 modifier
                     .align(Alignment.CenterEnd)
-                    .clickable { showSheet = true }
+                    .clickable {
+                            showSheet = true
+                    }
                     .size(20.dp)
             )
         }
@@ -138,7 +141,6 @@ fun AllTransactions(
         }
     }
 }
-
 
 @Preview
 @Composable

@@ -33,3 +33,7 @@ fun resultCheck(
             (status == "Executed" || status == "In progress" || status == "Declined") &&
             Regex("[A-Za-z0-9]{16}").matches(number))
 }
+
+fun checkStartEndDate(startDate:String, endDate:String):Boolean{
+    return startDate != "" && endDate != ""
+}
