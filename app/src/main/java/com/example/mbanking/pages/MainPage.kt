@@ -35,10 +35,9 @@ import com.example.mbanking.details.BottomSheet
 import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
 import com.example.mbanking.data.AccountData
+import com.example.mbanking.util.accountValue
+import com.example.mbanking.util.listOfAccounts
 
-var listOfAccounts = mutableListOf(AccountData.First, AccountData.Second, AccountData.Third)
-var transactionIter = 0
-var accountValue: Int = 0
 
 @Composable
 fun MainWindow(
@@ -54,7 +53,6 @@ fun MainWindow(
         BottomSheet(onDismiss = {
             showSheet = false
         })
-        println(accountNumber)
     }
     Box(
         modifier
@@ -93,7 +91,7 @@ fun MainWindow(
                     text = "VIEW ALL",
                     modifier
                         .align(Alignment.CenterEnd)
-                        .clickable { onClickViewAllButton()},
+                        .clickable { onClickViewAllButton() },
                     fontSize = 14.sp,
                     color = Color(0xFF409CFF)
                 )

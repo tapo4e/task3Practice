@@ -32,12 +32,15 @@ import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 import com.example.mbanking.data.TransactionsData
 import com.example.mbanking.details.MyDatePickerDialog
+import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.checkAmount
 import com.example.mbanking.util.checkCompany
 import com.example.mbanking.util.checkDate
 import com.example.mbanking.util.checkNumber
 import com.example.mbanking.util.checkStatus
+import com.example.mbanking.util.listOfAccounts
 import com.example.mbanking.util.resultCheck
+import com.example.mbanking.util.transactionIter
 
 @Composable
 fun TransactionChangePage(
@@ -116,7 +119,8 @@ fun TransactionChangePage(
                 fontWeight = FontWeight.Light
             )
             OutlinedTextField(
-                value = date, onValueChange = { transactionsData.setDate(it);},
+                value = date,
+                onValueChange = { transactionsData.setDate(it); },
                 readOnly = true,
                 modifier = modifier
                     .fillMaxWidth()
@@ -159,7 +163,8 @@ fun TransactionChangePage(
             )
             var amount by remember { mutableStateOf(transactionsData.getAmount()) }
             OutlinedTextField(
-                value = amount, onValueChange = { transactionsData.setAmount(it); amount = it },
+                value = amount,
+                onValueChange = { transactionsData.setAmount(it); amount = it },
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 7.dp),
