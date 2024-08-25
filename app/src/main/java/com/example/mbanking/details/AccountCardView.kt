@@ -29,9 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
 import com.example.mbanking.data.AccountData
+import com.example.mbanking.data.entities.AccountDbEntity
 
 @Composable
-fun AccountCard(modifier: Modifier = Modifier, onClick: () -> Unit, accountData: AccountData) {
+fun AccountCard(modifier: Modifier = Modifier, onClick: () -> Unit, accountData: AccountDbEntity) {
     Box(
         modifier
             .clickable { onClick() }
@@ -54,7 +55,7 @@ fun AccountCard(modifier: Modifier = Modifier, onClick: () -> Unit, accountData:
             Column(modifier.padding(start = 10.dp)) {
                 Text(text = accountData.accountName, color = Color.White)
                 Text(
-                    text = accountData.bankAccountNumber,
+                    text = accountData.bankAccountNumber.toString(),
                     color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
                     fontSize = 13.sp
                 )
@@ -92,10 +93,10 @@ fun AccountCard(modifier: Modifier = Modifier, onClick: () -> Unit, accountData:
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun AccountCardPreview() {
-    AccountCard(accountData = AccountData.First, onClick = {
-
-    })
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun AccountCardPreview() {
+//    AccountCard(accountData = AccountData.First, onClick = {
+//
+//    })
+//}

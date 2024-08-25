@@ -22,8 +22,8 @@ abstract class AppDataBase:RoomDatabase() {
             return Room.databaseBuilder(
                 context,
                 AppDataBase::class.java,
-                "main.db"
-            ).createFromAsset("assets/mbanking.db")
+                "main3.db"
+            ).createFromAsset("mbanking.db")
                 .allowMainThreadQueries()
                 .build()
         }

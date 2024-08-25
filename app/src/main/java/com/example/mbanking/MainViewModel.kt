@@ -5,9 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.mbanking.data.AppDataBase
+import com.example.mbanking.data.entities.AccountDbEntity
 
 class MainViewModel(dataBase: AppDataBase) : ViewModel() {
-    val accountList = dataBase.getAccountDbEntity().getAllAccounts()
+    val itemList: List<AccountDbEntity> = dataBase.getAccountDbEntity().getAllAccounts()
     companion object{
         val factory : ViewModelProvider.Factory = object : ViewModelProvider.Factory{
             @Suppress("UNCHECKED_CAST")

@@ -29,12 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mbanking.MainViewModel
 import com.example.mbanking.buttons.AddButton
 import com.example.mbanking.details.AccountCard
 import com.example.mbanking.details.BottomSheet
 import com.example.mbanking.details.TransactionCard
 import com.example.mbanking.ui.theme.MBankingTheme
-import com.example.mbanking.data.AccountData
 import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.listOfAccounts
 
@@ -44,13 +45,16 @@ fun MainWindow(
     modifier: Modifier = Modifier,
     onClickAddButton: () -> Unit,
     onClickTransactionButton: () -> Unit,
-    onClickViewAllButton: () -> Unit
+    onClickViewAllButton: () -> Unit,
+    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory)
 ) {
+    val itemList = mainViewModel.itemList
+    println(itemList)
     var accountNumber by remember { mutableIntStateOf(0) }
     accountNumber = accountValue
     var showSheet by remember { mutableStateOf(false) }
     if (showSheet) {
-        BottomSheet(onDismiss = {
+        BottomSheet(accountList = itemList, onDismiss = {
             showSheet = false
         })
     }
@@ -71,7 +75,7 @@ fun MainWindow(
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier.size(20.dp))
-            AccountCard(accountData = listOfAccounts[accountNumber], onClick = {
+            AccountCard(accountData = itemList[accountNumber], onClick = {
                 showSheet = true
             }
             )
