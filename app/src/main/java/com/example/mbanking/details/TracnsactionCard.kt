@@ -22,11 +22,9 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mbanking.data.AccountData
-import com.example.mbanking.data.TransactionsData
+import com.example.mbanking.data.entities.TransactionDbEntity
 
 
 val colorMap = mapOf(
@@ -38,7 +36,7 @@ val colorMap = mapOf(
 @Composable
 fun TransactionCard(
     modifier: Modifier = Modifier,
-    transactionsData: TransactionsData,
+    transactionsData: TransactionDbEntity,
     onClick:() ->Unit) {
     Box(
         modifier
@@ -50,17 +48,17 @@ fun TransactionCard(
     {
         Column(modifier.padding(start = 15.dp, top = 10.dp)) {
             Text(
-                text = transactionsData.getCompany(), color = Color.White,
+                text = transactionsData.company, color = Color.White,
                 fontSize = 17.sp
             )
             Text(
-                text = transactionsData.getDate(),
+                text = transactionsData.date,
                 color = Color(0xFFEBEBF5).copy(alpha = 0.4f),
                 fontSize = 13.sp
             )
             Text(
-                text = transactionsData.getTransactionStatus(),
-                color = Color(colorMap[transactionsData.getTransactionStatus()]!!),
+                text = transactionsData.transactionStatus,
+                color = Color(colorMap[transactionsData.transactionStatus]!!),
                 fontSize = 13.sp
             )
         }
@@ -71,7 +69,7 @@ fun TransactionCard(
                 .wrapContentSize()
         ) {
             Text(
-                text = "$${transactionsData.getAmount()}",
+                text = "$${transactionsData.amount}",
                 color = Color.White,
                 fontSize = 17.sp,
                 modifier = modifier.padding(end = 10.dp)
@@ -102,8 +100,8 @@ fun TransactionCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TransactionCardPreview() {
-    TransactionCard(transactionsData = AccountData.First.listOfTransctions[0]){}
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun TransactionCardPreview() {
+//    TransactionCard(transactionsData = AccountData.First.listOfTransctions[0]){}
+//}

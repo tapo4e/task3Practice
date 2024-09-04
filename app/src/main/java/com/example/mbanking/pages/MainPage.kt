@@ -1,5 +1,6 @@
 package com.example.mbanking.pages
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -16,7 +17,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,35 +26,32 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mbanking.MainViewModel
 import com.example.mbanking.buttons.AddButton
+import com.example.mbanking.data.entities.AccountDbEntity
+import com.example.mbanking.data.entities.TransactionDbEntity
 import com.example.mbanking.details.AccountCard
 import com.example.mbanking.details.BottomSheet
 import com.example.mbanking.details.TransactionCard
-import com.example.mbanking.ui.theme.MBankingTheme
 import com.example.mbanking.util.accountValue
-import com.example.mbanking.util.listOfAccounts
+import kotlinx.coroutines.flow.StateFlow
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun MainWindow(
     modifier: Modifier = Modifier,
     onClickAddButton: () -> Unit,
-    onClickTransactionButton: () -> Unit,
+    onClickTransactionButton: (transactionId: Int) -> Unit,
     onClickViewAllButton: () -> Unit,
-    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory)
-) {
-    val itemList = mainViewModel.itemList
-    println(itemList)
-    var accountNumber by remember { mutableIntStateOf(0) }
-    accountNumber = accountValue
+    accountData: List<AccountDbEntity>,
+    transactionData: StateFlow<List<TransactionDbEntity>>,
+
+    ) {
     var showSheet by remember { mutableStateOf(false) }
     if (showSheet) {
-        BottomSheet(accountList = itemList, onDismiss = {
+        BottomSheet(accountList = accountData, onDismiss = {
             showSheet = false
         })
     }
@@ -75,7 +72,7 @@ fun MainWindow(
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier.size(20.dp))
-            AccountCard(accountData = itemList[accountNumber], onClick = {
+            AccountCard(accountData = accountData[accountValue.value], onClick = {
                 showSheet = true
             }
             )
@@ -111,11 +108,10 @@ fun MainWindow(
                         )
                     }) {
                 items(4) { value ->
-                    val it = listOfAccounts[accountNumber].listOfTransctions.size - value - 1
-                    TransactionCard(transactionsData = listOfAccounts[accountNumber].listOfTransctions[it])
+                    val it = transactionData.value.size - value -1
+                    TransactionCard(transactionsData = transactionData.value[it])
                     {
-
-                        onClickTransactionButton()
+                        onClickTransactionButton(it)
                     }
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
@@ -137,11 +133,11 @@ fun MainWindow(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun MainPagePreview() {
-    MBankingTheme {
-        MainWindow(onClickAddButton = {}, onClickViewAllButton = {},
-            onClickTransactionButton = {})
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun MainPagePreview() {
+//    MBankingTheme {
+//        MainWindow(onClickAddButton = {}, onClickViewAllButton = {},
+//            onClickTransactionButton = {})
+//    }
+//}

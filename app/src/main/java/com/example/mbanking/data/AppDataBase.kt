@@ -14,7 +14,8 @@ import com.example.mbanking.data.entities.TransactionDbEntity
     entities = [
         AccountDbEntity::class,
         TransactionDbEntity::class
-    ]
+    ],
+
 )
 abstract class AppDataBase:RoomDatabase() {
     companion object{

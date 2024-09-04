@@ -17,8 +17,8 @@ import androidx.room.PrimaryKey
     ]
     )
 data class TransactionDbEntity(
-    @PrimaryKey(autoGenerate = true) val id :Long,
-    @ColumnInfo(name = "account_id") val accountId : Int,
+    @PrimaryKey(autoGenerate = true) val id :Long = 0,
+    @ColumnInfo(name = "account_id") val accountId : Int ,
     val company: String,
     val date: String,
     @ColumnInfo(name = "transaction_status") val transactionStatus: String,

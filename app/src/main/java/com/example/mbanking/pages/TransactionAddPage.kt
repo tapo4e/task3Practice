@@ -1,6 +1,7 @@
 package com.example.mbanking.pages
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,22 +23,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mbanking.data.TransactionsData
+import com.example.mbanking.data.entities.TransactionDbEntity
 import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.checkAmount
 import com.example.mbanking.util.checkCompany
 import com.example.mbanking.util.checkNumber
 import com.example.mbanking.util.checkStatus
 import com.example.mbanking.util.convertMillisToDate
-import com.example.mbanking.util.listOfAccounts
 import com.example.mbanking.util.resultCheck
 import java.util.Calendar
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun TransactionAddPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun TransactionAddPage(
+    modifier: Modifier = Modifier, onClick: () -> Unit,
+    insertTransaction: (TransactionDbEntity) -> Unit
+) {
     var validError by remember {
         mutableStateOf(false)
     }
@@ -129,12 +132,20 @@ fun TransactionAddPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 textStyle = TextStyle(Color.White),
                 isError = checkAmount(amount, validError)
             )
+
             val transaction =
-                TransactionsData(company, date, status, amount, number)
+                TransactionDbEntity(
+                    company = company,
+                    date = date,
+                    transactionStatus = status,
+                    amount = amount,
+                    transactionNumber = number,
+                    accountId = accountValue.value + 1
+                )
             Button(
                 onClick = {
                     validError = if (resultCheck(company, amount, date, status, number)) {
-                        listOfAccounts[accountValue].listOfTransctions.add(transaction)
+                        insertTransaction(transaction)
                         onClick()
                         false
                     } else {
@@ -155,11 +166,11 @@ fun TransactionAddPage(modifier: Modifier = Modifier, onClick: () -> Unit) {
     }
 }
 
-@Preview
-@Composable
-fun TransactionAddPagePreview() {
-    TransactionAddPage {}
-}
+//@Preview
+//@Composable
+//fun TransactionAddPagePreview() {
+//    TransactionAddPage {}
+//}
 
 
 

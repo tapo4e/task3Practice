@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.data.entities.AccountDbEntity
 import com.example.mbanking.util.accountValue
-import com.example.mbanking.util.listOfAccounts
+
 import kotlinx.coroutines.launch
 
 
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 fun BottomSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    accountList:List<AccountDbEntity>
+    accountList:List<AccountDbEntity>,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
@@ -68,7 +68,7 @@ fun BottomSheet(
                     AccountCard(accountData = accountList[value], onClick = {
                         scope.launch { modalBottomSheetState.hide() }.invokeOnCompletion {
                             onDismiss()
-                            accountValue = value
+                            accountValue.value=value
                         }
                     })
                     Spacer(modifier.size(10.dp))

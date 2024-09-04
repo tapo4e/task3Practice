@@ -32,16 +32,14 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.R
+import com.example.mbanking.data.entities.TransactionDbEntity
 import com.example.mbanking.details.DateBottomSheet
 import com.example.mbanking.details.TransactionCard
-import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.defaultEndDate
 import com.example.mbanking.util.defaultStartDate
-import com.example.mbanking.util.listOfAccounts
 import com.example.mbanking.util.sortByDate
 
 
@@ -49,7 +47,8 @@ import com.example.mbanking.util.sortByDate
 fun AllTransactions(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit,
-    onClickTransactionButton: () -> Unit
+    onClickTransactionButton: (transactionId:Int) -> Unit,
+    transactionsData: List<TransactionDbEntity>
 ) {
     var startDate by remember { mutableStateOf(defaultStartDate) }
     var endDate by remember { mutableStateOf(defaultEndDate) }
@@ -119,17 +118,18 @@ fun AllTransactions(
                         cornerRadius = CornerRadius(15.dp.toPx())
                     )
                 }) {
-            items(listOfAccounts[accountValue].listOfTransctions.size) { value ->
-                val it = listOfAccounts[accountValue].listOfTransctions.size - value - 1
+            items(transactionsData.size) { value ->
+                val it = transactionsData.size - value - 1
                 if (sortByDate(
                         startDate,
                         endDate,
-                        listOfAccounts[accountValue].listOfTransctions[it].getDate()
+                        transactionsData[it].date
                     )
                 ) {
-                    TransactionCard(transactionsData = listOfAccounts[accountValue].listOfTransctions[it])
+                    TransactionCard(transactionsData = transactionsData[it])
+
                     {
-                        onClickTransactionButton()
+                        onClickTransactionButton(it)
                     }
                     Divider(
                         modifier.padding(start = 15.dp, end = 15.dp),
@@ -142,10 +142,10 @@ fun AllTransactions(
     }
 }
 
-@Preview
-@Composable
-fun AllTransactionsPreview() {
-    AllTransactions(onClickBackButton = {}) {
-
-    }
-}
+//@Preview
+//@Composable
+//fun AllTransactionsPreview() {
+//    AllTransactions(onClickBackButton = {}) {
+//
+//    }
+//}
