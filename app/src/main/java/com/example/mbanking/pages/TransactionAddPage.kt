@@ -12,6 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mbanking.data.entities.TransactionDbEntity
@@ -30,11 +36,12 @@ import com.example.mbanking.util.accountValue
 import com.example.mbanking.util.checkAmount
 import com.example.mbanking.util.checkCompany
 import com.example.mbanking.util.checkNumber
-import com.example.mbanking.util.checkStatus
 import com.example.mbanking.util.convertMillisToDate
+import com.example.mbanking.util.listOfStatus
 import com.example.mbanking.util.resultCheck
 import java.util.Calendar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun TransactionAddPage(
@@ -106,15 +113,38 @@ fun TransactionAddPage(
                 fontWeight = FontWeight.Light
             )
             var status by remember { mutableStateOf("") }
-            OutlinedTextField(
-                value = status, onValueChange = { status = it },
-                modifier
+            var expanded by remember { mutableStateOf(false) }
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded }
+            ){
+                OutlinedTextField(modifier=modifier
+                    .menuAnchor()
                     .fillMaxWidth()
                     .padding(top = 7.dp),
-                shape = RoundedCornerShape(10.dp),
-                textStyle = TextStyle(Color.White),
-                isError = checkStatus(status, validError)
-            )
+                    readOnly = true,
+                    textStyle = TextStyle(Color.White),
+                    value = status,
+                    onValueChange = {},
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    shape = RoundedCornerShape(10.dp),)
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false}) {
+                    listOfStatus.forEach{
+                        statusItem ->
+                        DropdownMenuItem(
+                            text={Text(statusItem,style = MaterialTheme.typography.bodyLarge)},
+                            onClick ={
+                                status = statusItem
+                                expanded = false
+                            },
+                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                        )
+
+                    }
+                }
+            }
             Text(
                 text = "Amount",
                 color = Color.White,
@@ -166,11 +196,11 @@ fun TransactionAddPage(
     }
 }
 
-//@Preview
-//@Composable
-//fun TransactionAddPagePreview() {
-//    TransactionAddPage {}
-//}
+@Preview
+@Composable
+fun TransactionAddPagePreview() {
+    TransactionAddPage(onClick = {}, insertTransaction = {})
+}
 
 
 
